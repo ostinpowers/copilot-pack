@@ -1,0 +1,7 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "copilot-pack",
+  "version": "1.0.0",
+  "description": "Skills and agents that keep GitHub Copilot in VS Code fast and frugal: token audits, read-only cloud checks, server changes with a rollback, infrastructure plan reviews, handoffs.",
+  "keywords": ["copilot", "vscode", "tokens", "aws", "azure", "powershell", "terraform"]
+}

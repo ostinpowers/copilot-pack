@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "matcher": "bash|powershell|view|grep|glob",
+        "powershell": "$t = [Console]::In.ReadToEnd(); $shell = $t -match '\"toolName\"\\s*:\\s*\"(bash|powershell)\"'; if ($shell -and $t -match 'git\\s+push\\b.*\\s(--force|-f)\\b') { '{\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"A force push is refused: ask the user.\"}' } elseif ($shell -and $t -match 'git\\s+push\\b') { '{\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"A push needs the user.\"}' } elseif ($t -match '(?i)(\\.env|\\.pem|\\.pfx|\\.p12|\\.key|id_rsa|id_ed25519|\\.tfstate)\\b') { '{\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"A secret file: ask the user for what you need from it.\"}' }",
+        "bash": "t=$(cat); shell=0; printf '%s' \"$t\" | grep -Eq '\"toolName\" *: *\"(bash|powershell)\"' && shell=1; if [ $shell = 1 ] && printf '%s' \"$t\" | grep -Eq 'git +push.* (--force|-f)([^a-zA-Z0-9_]|$)'; then echo '{\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"A force push is refused: ask the user.\"}'; elif [ $shell = 1 ] && printf '%s' \"$t\" | grep -Eq 'git +push'; then echo '{\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"A push needs the user.\"}'; elif printf '%s' \"$t\" | grep -Eiq '(\\.env|\\.pem|\\.pfx|\\.p12|\\.key|id_rsa|id_ed25519|\\.tfstate)([^a-zA-Z0-9_]|$)'; then echo '{\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"A secret file: ask the user for what you need from it.\"}'; fi; exit 0",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

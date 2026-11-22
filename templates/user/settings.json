@@ -1,0 +1,32 @@
+// Merge into VS Code's user settings (Windows: %APPDATA%\Code\User\settings.json;
+// macOS: ~/Library/Application Support/Code/User/settings.json). Never replace the file.
+// Each key's reason is in GUIDE.md, Settings.
+{
+  // Lets this repository install as a plugin (Chat: Install Plugin from Source).
+  "chat.plugins.enabled": true,
+  // Shortens long terminal output before the model reads it (preview).
+  "chat.tools.compressOutput.enabled": true,
+  // Summarises a long chat instead of failing at the context limit (on by default).
+  "github.copilot.chat.summarizeAgentConversationHistory.enabled": true,
+  // Custom agents in Copilot harness sessions.
+  "github.copilot.chat.cli.customAgents.enabled": true,
+  // Tokens, tool calls and cache hits per session, in Agent Debug Logs. Turn off once measured.
+  "chat.agentHost.agentDebugLog.enabled": true,
+  // Read-only commands run without asking; everything else still asks. User settings only.
+  "chat.tools.terminal.autoApprove": {
+    "/^git (status|log|diff|show|branch)\\b/": true,
+    "/^(Get-ChildItem|Get-Content|Get-Item|Select-String|Test-Path)\\b/": true,
+    "/^(ls|cat|head|tail|grep|wc)\\b/": true,
+    "/^aws sts get-caller-identity\\b/": true,
+    "/^az account show\\b/": true
+  },
+  // Generated, dependency and state files out of search, which counts toward the context.
+  "search.exclude": {
+    "**/.terraform": true,
+    "**/*.tfstate*": true,
+    "**/node_modules": true,
+    "**/.venv": true,
+    "**/obj": true,
+    "**/dist": true
+  }
+}
